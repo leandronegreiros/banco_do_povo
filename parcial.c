@@ -15,10 +15,84 @@ struct cliente
 };
 
 /* Variavel clientes*/
-struct cliente cliente;
+struct cliente cliente_busca[2];
 struct cliente cliente_aux[2];
 struct cliente cliente_delet[2];
 struct cliente clientes[2];
+
+/* Busca dados do cliente e informa todas todos os dados*/
+int buscarCliente()
+{
+    int count = 0;
+    system("clear"); /* No windows e: system("cls"); */
+    printf("Buscar cliente...\n\n");
+
+    printf("Informe a agencia do cliente: ");
+    scanf("%d", &cliente_busca[0].agencia);
+    printf("Informe a conta corrente do cliente: ");
+    scanf("%d", &cliente_busca[0].contaCorrente);
+
+    for (int i = 0; i < 3; i++)
+    {
+        if (clientes[i].agencia == cliente_busca[0].agencia && clientes[i].contaCorrente == cliente_busca[0].contaCorrente)
+        {
+            system("clear"); /* No windows e: system("cls"); */
+            printf("\nNome: %s\n", clientes[i].nome);
+            printf("CPF: %s\n", clientes[i].cpf);
+            printf("Conta corrente: %d\n", clientes[i].contaCorrente);
+            printf("Senha: %s\n", clientes[i].senha);
+            printf("Agencia: %d\n", clientes[i].agencia);
+            printf("Renda Mensal: %.2f\n", clientes[i].rendaMensal);
+        }
+    }
+}
+
+/* Funcao que informa o perfil do cliente e suas funcionalidades*/
+int perfilCliente()
+{
+    int funcaoSelecionada;
+
+    do
+    {
+        printf("\nMENU PERFIL CLIENTE\n");
+        printf("***********Banco do Povo***********\n");
+        printf("[1] Consultar Extrato (0.5):\n");
+        printf("[2] Realizar deposito (0.5):\n");
+        printf("[3] Realizar saque (0.5):\n");
+        printf("[4] Realizar Emprestimo (1.0):\n");
+        printf("[5] Consultar emprestimo (0.5):\n");
+        printf("[0] Sair(0.25):\n");
+
+        scanf("%d", &funcaoSelecionada);
+
+        // system("clear"); /* No windows e: system("cls"); */
+        switch (funcaoSelecionada)
+        {
+        case 1: /* Consultar Extrato*/
+            consultarExtrati(); 
+            break;
+        case 2: /* Realizar deposito*/
+            realizarDeposito(); 
+            break;
+        case 3: /*  Realizar saque*/
+            realizaeSaque();
+            break;
+        case 4: /* Realizar Emprestimo */
+            realizarEmprestimo();
+            break;
+        case 5: /*  Realizar saque*/
+            realizaeSaque();
+            break;
+        case 0: /* Sair*/
+            printf("\nAte logo...\n");
+            break;
+        default:
+            printf("\n infome novamente!\n");
+            break;
+        }
+
+    } while (funcaoSelecionada != 0);
+}
 
 /* Funcao que faz o encerramento da conta*/
 int encerrarConta()
@@ -267,7 +341,7 @@ int perfilGerente()
 
         scanf("%d", &funcaoSelecionada);
 
-        system("clear"); /* No windows e: system("cls"); */
+        // system("clear"); /* No windows e: system("cls"); */
         switch (funcaoSelecionada)
         {
         case 1: /*  [1] Abrir conta*/
@@ -299,15 +373,18 @@ int main()
 
     do
     {
-        system("clear"); /* No windows e: system("cls"); */
+        // system("clear"); /* No windows e: system("cls"); */
         printf("\nLogin \n");
         printf("***********Banco do Povo***********\n");
         printf("[1] Gerente:\n");
         printf("[2] Cliente:\n");
         printf("[0] Sair:\n");
-
         scanf("%d", &perfilSelecionado);
-        system("clear"); /* No windows e: system("cls"); */
+        //  system("clear");
+        /* No windows e: system("cls"); */
+
+        printf("perfilSelecionado: %d\n", perfilSelecionado);
+
         switch (perfilSelecionado)
         {
         case 1: /* Gerente*/
@@ -315,8 +392,10 @@ int main()
             perfilGerente(); /* Chamada da funcao   perfilGerente() */
 
             break;
-        case 2: /* Cliente*/
-            printf("\nCliente\n");
+        case 2:
+
+            perfilCliente();
+
             break;
         case 0: /* Sair*/
             printf("\nAte logo...\n");
