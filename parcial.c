@@ -116,6 +116,7 @@ int realizaeSaque(int agencia, int contaCorrente, float valor)
                 if (clientes[i].saldo >= saque)
                 {
                     clientes[i].saldo = clientes[i].saldo - saque;
+                    printf("Saque feito com sucesso, valor: %.2f\n", saque);
                 }
                 else
                 {
@@ -148,6 +149,7 @@ int realizarDeposito(int agencia, int contaCorrente)
             if (clientes[i].agencia == agencia && clientes[i].contaCorrente == contaCorrente)
             {
                 clientes[i].saldo = clientes[i].saldo + deposito;
+                printf("Deposito feito com sucesso, valor: %.2f\n", deposito);
             }
         }
     }
@@ -181,6 +183,7 @@ int consultarExtrato()
             printf("Agencia: %d\n", clientes[i].agencia);
             printf("Renda Mensal: %.2f\n", clientes[i].rendaMensal);
             printf("Saldo: %.2f\n", clientes[i].saldo);
+            printf("Emprestimo: %.2f\n", clientes[i].emprestimo);
         }
     }
 }
@@ -189,46 +192,76 @@ int consultarExtrato()
 int perfilCliente()
 {
     int funcaoSelecionada;
+    char nome[30];
+    char senha[30];
+    int count_login = 0;
+    int token = 0;
 
     do
     {
-        printf("\nMENU PERFIL CLIENTE\n");
-        printf("***********Banco do Povo***********\n");
-        printf("[1] Consultar Extrato (0.5):\n");
-        printf("[2] Realizar deposito (0.5):\n");
-        printf("[3] Realizar saque (0.5):\n");
-        printf("[4] Realizar Emprestimo (1.0):\n");
-        printf("[5] Consultar emprestimo (0.5):\n");
-        printf("[0] Sair(0.25):\n");
+        if (token == 0)
+        { //valida se o gerente esta logado
+            token = 1;
+            printf("\n\nLogin do cliente...\n");
+            printf("nome:");
+            scanf("%s", &nome);
 
-        scanf("%d", &funcaoSelecionada);
-
-        // system("clear"); /* No windows e: system("cls"); */
-        switch (funcaoSelecionada)
-        {
-        case 1: /* Consultar Extrato*/
-            consultarExtrato();
-            break;
-        case 2: /* Realizar deposito*/
-            realizarDeposito(1, 1);
-            break;
-        case 3: /*  Realizar saque*/
-            realizaeSaque(1, 1, 20);
-            break;
-        case 4: /* Realizar Emprestimo */
-            realizarEmprestimo(1, 1);
-            break;
-        case 5: /*  Consultar emprestimo*/
-            consultarEmprestimo(1, 1);
-            break;
-        case 0: /* Sair*/
-            printf("\nAte logo...\n");
-            break;
-        default:
-            printf("\n infome novamente!\n");
-            break;
+            printf("senha:");
+            scanf("%s", &senha);
         }
+        for (int i = 0; i < 3; i++)
+        {
+            if (strcmp(nome, clientes[i].nome) == 0 && strcmp(senha, clientes[i].senha) == 0)
+            {
 
+                printf("\nSeja bem-vindo, Cliente: (%s)\n", nome);
+
+                printf("\nMENU PERFIL CLIENTE\n");
+                printf("***********Banco do Povo***********\n");
+                printf("[1] Consultar Extrato (0.5):\n");
+                printf("[2] Realizar deposito (0.5):\n");
+                printf("[3] Realizar saque (0.5):\n");
+                printf("[4] Realizar Emprestimo (1.0):\n");
+                printf("[5] Consultar emprestimo (0.5):\n");
+                printf("[0] Sair(0.25):\n");
+
+                scanf("%d", &funcaoSelecionada);
+
+                // system("clear"); /* No windows e: system("cls"); */
+                switch (funcaoSelecionada)
+                {
+                case 1: /* Consultar Extrato*/
+                    consultarExtrato();
+                    break;
+                case 2: /* Realizar deposito*/
+                    realizarDeposito(clientes[i].agencia, clientes[i].contaCorrente);
+                    break;
+                case 3: /*  Realizar saque*/
+                    realizaeSaque(clientes[i].agencia, clientes[i].contaCorrente, clientes[i].saldo);
+                    break;
+                case 4: /* Realizar Emprestimo */
+                    realizarEmprestimo(clientes[i].agencia, clientes[i].contaCorrente);
+                    break;
+                case 5: /*  Consultar emprestimo*/
+                    consultarEmprestimo(clientes[i].agencia, clientes[i].contaCorrente);
+                    break;
+                case 0: /* Sair*/
+                    printf("\nAte logo...\n");
+                    break;
+                default:
+                    printf("\n infome novamente!\n");
+                    break;
+                }
+            }
+            else
+            {
+                count_login++;
+                if (count_login == 3)
+                {
+                    printf("Login invalido...");
+                }
+            }
+        }
     } while (funcaoSelecionada != 0);
 }
 
@@ -446,20 +479,23 @@ int perfilGerente()
     int funcaoSelecionada;
     char nome[30];
     char senha[30];
+    int token = 0;
 
-    strcpy(nome, "santiago");
+    strcpy(nome, "thanos");
     strcpy(senha, "123");
     do
     {
+        if (token == 0)
+        { //valida se o gerente esta logado
+            token = 1;
+            printf("\n\nLogin do gerente...\n\n");
+            printf("nome:");
+            scanf("%s", &gerente1.nome);
 
-        printf("\n\nLogin do gerente...\n");
-        printf("nome:");
-        scanf("%s", &gerente1.nome);
-
-        printf("senha:");
-        scanf("%s", &gerente1.senha);
-
-        if (strcmp(nome, gerente1.nome) == 0 && strcmp(senha, gerente1.senha)  == 0)
+            printf("senha:");
+            scanf("%s", &gerente1.senha);
+        }
+        if (strcmp(nome, gerente1.nome) == 0 && strcmp(senha, gerente1.senha) == 0)
         {
 
             printf("\nSeja bem-vindo, GERENTE: (%s)\n", nome);
@@ -510,7 +546,6 @@ int main()
     do
     {
         // system("clear"); /* No windows e: system("cls"); */
-        printf("\nLogin \n");
         printf("***********Banco do Povo***********\n");
         printf("[1] Gerente:\n");
         printf("[2] Cliente:\n");
