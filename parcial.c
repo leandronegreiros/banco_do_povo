@@ -37,9 +37,9 @@ int consultarEmprestimo(int agencia, int contaCorrente)
     float valorEmprestimo;
     int count = 0;
 
-    system("clear"); /* No windows e: system("cls"); */
     printf("Consultar emprestimo...\n\n");
 
+    //Mostrando emprestimo
     for (int i = 0; i < 3; i++)
     {
         if (clientes[i].agencia == agencia && clientes[i].contaCorrente == contaCorrente)
@@ -56,7 +56,7 @@ int realizarEmprestimo(int agencia, int contaCorrente)
     float emprestimo;
     int count = 0;
 
-    system("clear"); /* No windows e: system("cls"); */
+    //Informando valor do emprestimo
     printf("Realizar emprestimo...\n\n");
 
     printf("Informe o valor do emprestimo: ");
@@ -66,6 +66,7 @@ int realizarEmprestimo(int agencia, int contaCorrente)
 
     if (emprestimo > 0)
     {
+        //Regras para fazer o emprestimo
         for (int i = 0; i < 3; i++)
         {
             if (clientes[i].agencia == agencia && clientes[i].contaCorrente == contaCorrente)
@@ -100,8 +101,7 @@ int realizaeSaque(int agencia, int contaCorrente, float valor)
 {
     float saque;
     int count = 0;
-
-    system("clear"); /* No windows e: system("cls"); */
+    //Informando valor para o saque
     printf("Realizar deposito...\n\n");
 
     printf("Informe o valor do saque: ");
@@ -111,6 +111,7 @@ int realizaeSaque(int agencia, int contaCorrente, float valor)
     {
         for (int i = 0; i < 3; i++)
         {
+            //fazendo o saque debitando da conta
             if (clientes[i].agencia == agencia && clientes[i].contaCorrente == contaCorrente)
             {
                 if (clientes[i].saldo >= saque)
@@ -136,7 +137,7 @@ int realizarDeposito(int agencia, int contaCorrente)
 {
     float deposito;
 
-    system("clear"); /* No windows e: system("cls"); */
+    //Informando valor 
     printf("Realizar deposito...\n\n");
 
     printf("Informe o valor do deposito: ");
@@ -144,6 +145,7 @@ int realizarDeposito(int agencia, int contaCorrente)
 
     if (deposito > 0)
     {
+        //fazendo deposito
         for (int i = 0; i < 3; i++)
         {
             if (clientes[i].agencia == agencia && clientes[i].contaCorrente == contaCorrente)
@@ -163,7 +165,7 @@ int realizarDeposito(int agencia, int contaCorrente)
 int consultarExtrato()
 {
     int count = 0;
-    system("clear"); /* No windows e: system("cls"); */
+    //Informar o dadps do cliente para ser verificado
     printf("Buscar cliente...\n\n");
 
     printf("Informe a agencia do cliente: ");
@@ -175,7 +177,7 @@ int consultarExtrato()
     {
         if (clientes[i].agencia == cliente_busca[0].agencia && clientes[i].contaCorrente == cliente_busca[0].contaCorrente)
         {
-            system("clear"); /* No windows e: system("cls"); */
+            //Mostrando dados do cliente
             printf("\nNome: %s\n", clientes[i].nome);
             printf("CPF: %s\n", clientes[i].cpf);
             printf("Conta corrente: %d\n", clientes[i].contaCorrente);
@@ -200,7 +202,7 @@ int perfilCliente()
     do
     {
         if (token == 0)
-        { //valida se o gerente esta logado
+        { //valida se o gerente esta logado 
             token = 1;
             printf("\n\nLogin do cliente...\n");
             printf("nome:");
@@ -213,7 +215,7 @@ int perfilCliente()
         {
             if (strcmp(nome, clientes[i].nome) == 0 && strcmp(senha, clientes[i].senha) == 0)
             {
-
+                //Menu de funções que o gerente pode fazer
                 printf("\nSeja bem-vindo, Cliente: (%s)\n", nome);
 
                 printf("\nMENU PERFIL CLIENTE\n");
@@ -227,7 +229,6 @@ int perfilCliente()
 
                 scanf("%d", &funcaoSelecionada);
 
-                // system("clear"); /* No windows e: system("cls"); */
                 switch (funcaoSelecionada)
                 {
                 case 1: /* Consultar Extrato*/
@@ -286,6 +287,7 @@ int encerrarConta()
 
     for (int i = 0; i < 3; i++)
     {
+        //Apagando dados do vetor
         if (clientes[i].agencia == agencia && clientes[i].contaCorrente == contaCorrente)
         {
             strcpy(clientes[i].nome, "");
@@ -350,7 +352,7 @@ int atualizarDadosCliente()
         {
             do
             {
-                system("clear"); /* No windows e: system("cls"); */
+                // Dados do cliente que podem ser atualizados
                 printf("\nMENU DE ATUALIZACAO DO CLIENTE\n");
                 printf("***********Banco do Povo***********\n");
                 printf("[1] Nome: %s\n", clientes[i].nome);
@@ -361,7 +363,6 @@ int atualizarDadosCliente()
                 printf("[6] Renda Mensal: %.2f\n", clientes[i].rendaMensal);
                 printf("[0] Sair\n");
                 scanf("%d", &funcaoSelecionada);
-                system("clear"); /* No windows e: system("cls"); */
 
                 switch (funcaoSelecionada)
                 {
@@ -465,8 +466,10 @@ int abrirConta()
         }
         else
         {
+            //valida o cadastro de clientes no maximo 3 
             if (cont_cliente >= 3)
             {
+                
                 printf("O cadastro de cliente e limitado a 3 pessoas!\n");
             }
         }
@@ -497,7 +500,7 @@ int perfilGerente()
         }
         if (strcmp(nome, gerente1.nome) == 0 && strcmp(senha, gerente1.senha) == 0)
         {
-
+            //Funcionalidades que o gerente pode fazer
             printf("\nSeja bem-vindo, GERENTE: (%s)\n", nome);
 
             printf("\nMENU PERFIL GERENTE\n");
@@ -509,7 +512,6 @@ int perfilGerente()
 
             scanf("%d", &funcaoSelecionada);
 
-            // system("clear"); /* No windows e: system("cls"); */
             switch (funcaoSelecionada)
             {
             case 1: /*  [1] Abrir conta*/
@@ -517,7 +519,7 @@ int perfilGerente()
                 abrirConta(); /* Chamada da Função que faz a bertura de conta*/
 
                 break;
-            case 2:                      /* [2] Atualizar dados*/
+            case 2: /* [2] Atualizar dados*/
                 atualizarDadosCliente(); /* Chamada da Função que faz a atualizacao dos dados do cliente*/
                 break;
             case 3: /*  Chamada da Função que encerrar conta*/
@@ -545,24 +547,21 @@ int main()
 
     do
     {
-        // system("clear"); /* No windows e: system("cls"); */
+        // tipos de usarios do sitema
         printf("***********Banco do Povo***********\n");
         printf("[1] Gerente:\n");
         printf("[2] Cliente:\n");
         printf("[0] Sair:\n");
         scanf("%d", &perfilSelecionado);
-        //  system("clear");
         /* No windows e: system("cls"); */
 
         switch (perfilSelecionado)
         {
-        case 1:              /* Gerente*/
-            perfilGerente(); /* Chamada da funcao   perfilGerente() */
+        case 1: /* Gerente*/
+            perfilGerente(); /* Chamada das funcao do Gerente */
             break;
         case 2:
-
-            perfilCliente();
-
+            perfilCliente(); /* Chamada da funcao  cliente */
             break;
         case 0: /* Sair*/
             printf("\nAte logo...\n");
